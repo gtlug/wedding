@@ -1,0 +1,49 @@
+README
+
+-- INTRODUCTION --
+Zend-Demo is intended as a "starter kit" for developers who are just starting out with the Zend Framework.  This package provides no guarantees and usable "as is."
+
+To maximize your gain from using this package, please review the contents of all the files contained within.  While reviewing Zend library files aren't necessary, looking over them from time to time is a useful resource when no documentation exists.
+
+The code, outside of Zend Framework libraries, contained within are shared as "common knowledge" and cannot be under any means copyrighted.  The purpose of this package is not to introduce new ideas, but provide a coherent structure of concepts defined by the Zend Framework documentation, API, and existing open standards.  Please only re-distribute this package in this spirit.
+
+Enjoy ;)
+
+
+-- CONTENTS --
+application/ - Contains site controllers, layouts, view scripts/helpers
+boot/ - Bootstrap file(s), including main.php.  main.php can/should be broken up into smaller modules
+etc/ - Site configuration files
+lib/ - Reusable libraries (including the Zend Framework library)
+tmp/ - Temporary application data, like file uploads
+var/ - Variable data, like:  sessions, cache, log files
+wroot/ - HTTP document root
+
+
+-- INSTALLATION --
+Zend Framwork:
+To limit the size of this package, the actual Zend Framework was omitted.  You will need to add it yourself:
+- Download the latest version of The Framework
+- Extract it to a temporary location
+- Replace the contents of lib/Zend (in this package) with that of library/Zend (from the ZF package).
+
+Apache:
+The term "site root" refers to the root of this package (where the above contents reside).  This is not to be confused with the "document root" where your publically accessable resources are available (wroot/).  
+
+In your Apache VirtualHost or .htaccess definition, you will need to add the following.  You will need to change values as necessary (i.e. /path/to/site/root/).
+
+	DocumentRoot /path/to/site/root//wroot
+	DirectoryIndex index.php
+
+	SetEnv SITE_ROOT "/path/to/site/root/"
+	SetEnv INCLUDE_PATH "./:/usr/share/pear:/path/to/site/root/lib"
+	php_admin_value upload_tmp_dir "/path/to/site/root/tmp"
+	php_value session.save_path "/path/to/site/root/var/sessions"
+	php_value session.auto_start 0
+
+	<Location />
+		RewriteEngine on
+
+		RewriteCond %{REQUEST_URI} !/index.php
+		RewriteRule !\.(js|ico|gif|jpg|png|css|jar)$ /index.php [L]
+	</Location>

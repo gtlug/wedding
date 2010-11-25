@@ -1,0 +1,5 @@
+Contents of var/ should be apache writable
+log/ - contains log files
+log/error.log - contains fatal error messages
+cache/ - cache directory
+sessions/ - session data [NOT USED]
