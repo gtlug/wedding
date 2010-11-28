@@ -27,32 +27,22 @@ class Photos_IndexController extends Photos_Controller_Abstract
 	{
 		$NiX0n = "74154383@N00";
 		
-		//phpinfo();die();
-				
-		header("content-type: text/plain");
-		$results = $this->_flickr->tagSearch(
-			'whitevanberlowedding', 
+		if(!$this->_auth->hasIdentity())
+		{
+			throw new Exception("Not Authenticated");
+		}
+		$auth = $this->_auth->getIdentity();
+		$this->_flickr->token = $auth->getToken();
+		$results = $this->_flickr->privateTagSearch(
+			//'fragfest12', 
+			'whitevanberlowedding',
+			$this->_secret,
 			array(
 				'user_id' => $NiX0n,
-				//'privacy_filter' => 5
+				'auth_token' => $auth->getToken()
 			)
 		);
-		
-		foreach($results as $result)
-		{
-			print_r($result);
-		}
-		//$httpClient = new Zend_Http_Client();
-		//$adapter = new Zend_Http_Client_Adapter_Curl();
-		//$adapter->setCurlOption(CURLOPT_ENCODING, 'gzip');
-		//$httpClient->setAdapter($adapter);
-		
-		
-		//Zend_Rest_Client::setHttpClient($httpClient);
-		
-		//
-		
-		die();
+		$this->view->photos = $results;
 	}
 	
 }

@@ -20,9 +20,15 @@ abstract class Photos_Controller_Abstract extends Zend_Controller_Action
 	
 	protected $_secret = "f9f408a4ad592891";
 	
+	/**
+	 * @var Zend_Auth
+	 */
+	protected $_auth;
+	
 	public function init()
 	{
 		$this->_flickr = new Gtwebdev_Service_Flickr($this->_key);
+		$this->_flickr->secret = $this->_secret;
 		
 		$this->_cache = Zend_Cache::factory(
 			// Frontend, Backend
@@ -35,6 +41,11 @@ abstract class Photos_Controller_Abstract extends Zend_Controller_Action
 			array(
 				'cache_dir' => Zend_Registry::get('site_root') . 'var/cache/flickr'
 			)
+		);
+		$this->_auth = Gtwebdev_Auth::getInstance('Flickr');
+		$this->_auth->setStorage(
+									// note this last null argument sets infinite lifetime
+			new Gtwebdev_Auth_Storage_Cache($this->_cache, 'auth', array('auth'), null)
 		);
 	}
 	

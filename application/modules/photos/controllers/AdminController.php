@@ -25,33 +25,30 @@ class Photos_AdminController extends Photos_Controller_Abstract
 	*/
 	public function indexAction()
 	{
-		$NiX0n = "74154383@N00";
-		
-		//phpinfo();die();
-				
 		header("content-type: text/plain");
-		$results = $this->_flickr->tagSearch(
-			'whitevanberlowedding', 
-			array(
-				'user_id' => $NiX0n,
-				//'privacy_filter' => 5
-			)
-		);
-		
-		foreach($results as $result)
+		die();
+	}
+	
+	public function authenticateAction()
+	{
+		if(!$this->getRequest()->isPost())
 		{
-			print_r($result);
+			$frob = $this->getFrob();
+			$this->view->url = $this->_flickr->authenticationUrl($this->_secret, $this->getFrob());
+			
+			return;
 		}
-		//$httpClient = new Zend_Http_Client();
-		//$adapter = new Zend_Http_Client_Adapter_Curl();
-		//$adapter->setCurlOption(CURLOPT_ENCODING, 'gzip');
-		//$httpClient->setAdapter($adapter);
 		
-		
-		//Zend_Rest_Client::setHttpClient($httpClient);
-		
-		//
-		
+		header("content-type: text/plain");
+		$result = $this->_auth->authenticate(
+			new Gtwebdev_Auth_Adapter_Flickr($this->_flickr, $this->_secret, $this->getFrob())
+		);
+		print $result->isValid() ? "SUCCESS\n" : "FAILURE\n";
+		if(!$result->isValid())
+		{
+			print_r($result->getMessages());
+		}
+		print "\nFINISHED";
 		die();
 	}
 	
@@ -61,7 +58,7 @@ class Photos_AdminController extends Photos_Controller_Abstract
 		if(false === ($frob = $this->_cache->load($cacheId)))
 		{
 			$frob = $this->_flickr->getFrob($this->_secret);
-			$this->_cache->save($frob, $cacheId);
+			$this->_cache->save($frob, $cacheId, array('frob'), null);
 		}
 		return $frob;
 	}
