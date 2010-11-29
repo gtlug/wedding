@@ -29,6 +29,23 @@ class Photos_AdminController extends Photos_Controller_Abstract
 		die();
 	}
 	
+	public function cacheAction()
+	{
+		if(!$this->getRequest()->isPost())
+		{
+			return;
+		}
+		
+		header("content-type: text/plain");
+		
+		$success = $this->_cache->clean('notMatchingTag', array('auth', 'frob'));
+		print $success ? "SUCCESS" : "FAILURE";
+		
+		print "\nFINISHED";
+		die();
+		
+	}
+	
 	public function authenticateAction()
 	{
 		if(!$this->getRequest()->isPost())

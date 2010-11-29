@@ -16,6 +16,36 @@ class Photos_IndexController extends Photos_Controller_Abstract
 		parent::init();
 	}
 	
+	public function indexAction()
+	{
+		if(!$this->_auth->hasIdentity())
+		{
+			throw new Exception("Not Authenticated");
+		}
+		$auth = $this->_auth->getIdentity();
+		$user = $auth->getUser();
+		$this->_flickr->token = $auth->getToken();
+		$options = array(
+			'tags' => 'fragfest12',
+			'user_id' => $user['nsid'],
+			'auth_token' => $auth->getToken()
+		);
+		$paginator = new Zend_Paginator(new Gtwebdev_Paginator_Adapter_Flickr($this->_flickr, $options));
+		$paginator->setDefaultScrollingStyle('Sliding');
+		$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
+		$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
+		$paginator->setCache($this->_cache);
+		$paginator->setCacheEnabled(true);
+		
+		$this->view->photos = $paginator;
+	}
+	
+	public function widgetAction()
+	{
+		// same logic; different view
+		$this->indexAction();
+	}
+	
 	/**
 	* This action can be accessed at
 	* /home
@@ -23,7 +53,7 @@ class Photos_IndexController extends Photos_Controller_Abstract
 	* /home/index/index
 	*   M     C     A
 	*/
-	public function indexAction()
+	public function testAction()
 	{
 		$NiX0n = "74154383@N00";
 		
@@ -34,11 +64,12 @@ class Photos_IndexController extends Photos_Controller_Abstract
 		$auth = $this->_auth->getIdentity();
 		$this->_flickr->token = $auth->getToken();
 		$results = $this->_flickr->privateTagSearch(
-			//'fragfest12', 
-			'whitevanberlowedding',
+			'fragfest12', 
+			//'whitevanberlowedding',
 			$this->_secret,
 			array(
 				'user_id' => $NiX0n,
+				'page'=>2,
 				'auth_token' => $auth->getToken()
 			)
 		);

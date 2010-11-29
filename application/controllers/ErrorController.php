@@ -32,10 +32,15 @@ class ErrorController extends Controller_Abstract
 			
 					// Log the exception:
 					$e = $errors->exception;
-					Zend_Registry::get('logger')->log($e->getMessage(), Zend_Log::NOTICE);
+					Zend_Registry::get('logger')->log($this->formatException($e), Zend_Log::NOTICE);
 				break;
 			}
 		}
+	}
+	
+	public function formatException(Exception $e)
+	{
+		return "{$e->getMessage()}\n{$e->getTraceAsString()}\n";
 	}
 }
 ?>
