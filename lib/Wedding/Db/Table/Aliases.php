@@ -25,7 +25,7 @@ class Wedding_Db_Table_Aliases extends Zend_Db_Table_Abstract
 			$select = $this->select();
 		}
 		
-		$alias = trim($alias, " %");
+		$alias = trim($alias, "% \t\n\r\x0B\0");
 		$alias = "%$alias%";
 		$select = $select->where('aliasList LIKE ?', $alias);
 		
