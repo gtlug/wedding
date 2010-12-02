@@ -3,7 +3,7 @@
  * This abstract controller class defines functionality to be shared
  * across all module controllers.
  */
-abstract class Home_Controller_Abstract extends Zend_Controller_Action
+abstract class Rsvp_Controller_Abstract extends Zend_Controller_Action
 {
 	public function init()
 	{

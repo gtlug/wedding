@@ -9,7 +9,7 @@ require_once("Abstract.php");
  * URI scheme.  The third part is the action name, which are
  * methods in the conroller class.
  */
-class Home_IndexController extends Home_Controller_Abstract
+class Rsvp_IndexController extends Rsvp_Controller_Abstract
 {
 	/**
 	* This action can be accessed at
@@ -20,7 +20,15 @@ class Home_IndexController extends Home_Controller_Abstract
 	*/
 	public function indexAction()
 	{
-		$this->view->helloWorld = "Howdy All!";
+		if(!$this->getRequest()->isPost())
+		{
+			$this->_forward('widget');
+		}
+	}
+	
+	public function widgetAction()
+	{
+		
 	}
 }
 ?>

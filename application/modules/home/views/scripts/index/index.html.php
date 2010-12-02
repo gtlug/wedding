@@ -70,6 +70,26 @@ body
 	border-bottom: 3px solid black;
 }
 
+#rsvp
+{
+	padding: 50px 15px 20px 25px;
+}
+
+#rsvp input.text
+{
+	color: grey;
+}
+
+#rsvp p
+{
+	font-size: smaller;
+}
+
+#rsvp input.text.active
+{
+	color: black;
+}
+
 #bottom
 {
 	height: 312px;
@@ -88,14 +108,15 @@ body
 	</div>
 	<div id="right">
 		<div id="top">
-			<input type="text" />
-			<button type="button">RSVP</button>
+			<div id="rsvp">
+<?= $this->action('widget', 'index', 'rsvp') ?>
+			</div>
 		</div>
 		<div id="bottom">
 			<p><a href="#">Visit Registry</a></p>
 			<p><a href="/photos">View Photos</a></p>
-			<div style="padding-left: 20px;">
-<?= $this->action('widget', 'index', 'photos') ?>
+			<div id="photos" style="padding-left: 20px;">
+<?/*= $this->action('widget', 'index', 'photos') */?>
 			</div>		
 		</div>
 	</div>
