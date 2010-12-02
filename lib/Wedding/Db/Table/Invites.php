@@ -16,4 +16,43 @@ class Wedding_Db_Table_Invites extends Zend_Db_Table_Abstract
 			'refColumns'        => 'aliases'
 		)
 	);
+	
+	/**
+	 * 
+	 * @param array $names
+	 * @param Zend_Db_Table_Select $select
+	 * @return Zend_Db_Table_Select
+	 */
+	public function selectByNames($names, $select = null)
+	{
+		if(null === $select)
+		{
+			$select = $this->select();
+		}
+		$first = true;
+		foreach($names as $name)
+		{
+			$name = trim($name, "% \t\n\r\x0B\0");
+			$name = "%$name%";
+			$where = $first ? 'where' : 'orWhere';
+			$select = $select->$where('names LIKE ?', $name);
+			$first = false;
+		}
+		
+		return $select;
+	}
+	
+	/**
+	 * 
+	 * @param array $names
+	 * @param Zend_Db_Table_Select $select
+	 * @return Zend_Db_Table_Row
+	 */
+	public function fetchByNames($names, $select = null)
+	{
+		$select = $this->selectByNames($names, $select);
+		$row = $this->fetchRow($select);
+		return $row;
+	}
+	
 }

@@ -16,4 +16,41 @@ class Wedding_Db_Table_Guests extends Zend_Db_Table_Abstract
 			'refColumns'        => 'inviteId'
 		)
 	);
+	
+	/**
+	 * 
+	 * @param Zend_Db_Table_Row|integer $invite
+	 * @param Zend_Db_Table_Select $select
+	 * @return Zend_Db_Table_Select
+	 */
+	public function selectByInvite($invite, $select = null)
+	{
+		if(null === $select)
+		{
+			$select = $this->select();
+		}
+		$inviteId = $invite;
+		if(!is_numeric($invite))
+		{
+			$inviteId = $invite->inviteId;
+		}
+		
+		$select = $select->where('inviteId = ?', (integer)$inviteId);
+		
+		return $select;
+	}
+	
+	/**
+	 * 
+	 * @param Zend_Db_Table_Row|integer $invite
+	 * @param Zend_Db_Table_Select $select
+	 * @return Zend_Db_Table_Rowset
+	 */
+	public function fetchByInvite($invite, $select = null)
+	{
+		$select = $this->selectByInvite($invite, $select);
+		$rows = $this->fetchAll($select);
+		return $rows;
+	}
+		
 }
