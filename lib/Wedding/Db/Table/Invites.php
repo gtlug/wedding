@@ -46,13 +46,13 @@ class Wedding_Db_Table_Invites extends Zend_Db_Table_Abstract
 	 * 
 	 * @param array $names
 	 * @param Zend_Db_Table_Select $select
-	 * @return Zend_Db_Table_Row
+	 * @return Zend_Db_Table_Rowset
 	 */
 	public function fetchByNames($names, $select = null)
 	{
 		$select = $this->selectByNames($names, $select);
-		$row = $this->fetchRow($select);
-		return $row;
+		$rows = $this->fetchAll($select);
+		return $rows;
 	}
 	
 }
