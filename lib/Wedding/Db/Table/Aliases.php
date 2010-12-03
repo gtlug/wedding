@@ -36,13 +36,20 @@ class Wedding_Db_Table_Aliases extends Zend_Db_Table_Abstract
 	 * 
 	 * @param string $alias
 	 * @param Zend_Db_Table_Select $select
-	 * @return array|null
+	 * @return array
 	 */
 	public function fetchAliases($alias, $select = null)
 	{
 		$select = $this->selectAliases($alias, $select);
-		$aliasesRow = $this->fetchRow($select);
-		$aliases = preg_split("/\s*,\s*/");
+		$aliasesRows = $this->fetchAll($select);
+		$aliases = array();
+		foreach($aliasesRows as $aliasesRow)
+		{
+			$aliases = array_merge(
+				$aliases, 
+				preg_split("/\s*,\s*/", $aliasesRow->aliasList)
+			);
+		}
 		
 		return $aliases;
 	}
