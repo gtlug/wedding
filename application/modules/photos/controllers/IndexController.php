@@ -37,13 +37,15 @@ class Photos_IndexController extends Photos_Controller_Abstract
 				'auth_token' => $auth->getToken()
 			);
 			$paginator = new Zend_Paginator(new Gtwebdev_Paginator_Adapter_Flickr($this->_flickr, $options));
-			$paginator->setDefaultScrollingStyle('Sliding');
-			$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
-			$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
-			$paginator->setCacheEnabled(true);
 			
 			$this->_cache->save($paginator, $cacheId, array('paginator'));
 		}
+
+		$paginator->setDefaultScrollingStyle('Sliding');
+		$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
+		$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
+		$paginator->setCacheEnabled(true);
+	
 		
 		$this->view->photos = $paginator;
 	}
