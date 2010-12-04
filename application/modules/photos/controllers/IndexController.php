@@ -18,24 +18,32 @@ class Photos_IndexController extends Photos_Controller_Abstract
 	
 	public function indexAction()
 	{
-		if(!$this->_auth->hasIdentity())
+		$tag = $this->_getParam('tag', 'fragfest12');
+
+		Zend_Paginator::setCache($this->_cache);
+		$cacheId = "paginator_$tag";
+		if(false === ($paginator = $this->_cache->load($cacheId)))
 		{
-			throw new Exception("Not Authenticated");
+			if(!$this->_auth->hasIdentity())
+			{
+				throw new Exception("Not Authenticated");
+			}
+			$auth = $this->_auth->getIdentity();
+			$user = $auth->getUser();
+			$this->_flickr->token = $auth->getToken();
+			$options = array(
+				'tags' => $tag,
+				'user_id' => $user['nsid'],
+				'auth_token' => $auth->getToken()
+			);
+			$paginator = new Zend_Paginator(new Gtwebdev_Paginator_Adapter_Flickr($this->_flickr, $options));
+			$paginator->setDefaultScrollingStyle('Sliding');
+			$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
+			$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
+			$paginator->setCacheEnabled(true);
+			
+			$this->_cache->save($paginator, $cacheId, array('paginator'));
 		}
-		$auth = $this->_auth->getIdentity();
-		$user = $auth->getUser();
-		$this->_flickr->token = $auth->getToken();
-		$options = array(
-			'tags' => 'fragfest12',
-			'user_id' => $user['nsid'],
-			'auth_token' => $auth->getToken()
-		);
-		$paginator = new Zend_Paginator(new Gtwebdev_Paginator_Adapter_Flickr($this->_flickr, $options));
-		$paginator->setDefaultScrollingStyle('Sliding');
-		$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
-		$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
-		$paginator->setCache($this->_cache);
-		$paginator->setCacheEnabled(true);
 		
 		$this->view->photos = $paginator;
 	}
