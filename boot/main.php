@@ -43,15 +43,30 @@ $db = Zend_Db::factory($dbconfig->db->adapter, $dbconfig->db->config->toArray())
 // check connections before we proceed
 try 
 {
-    //$db->getConnection();
+	$db->getConnection();
 }
 catch (Zend_Db_Adapter_Exception $e) 
 {
 	$logger->log(print_r($e,true), Zend_Log::NOTICE);
+	print_r($e); die();
     // perhaps a failed login credential, or perhaps the RDBMS is not running
 }
 
 Zend_Registry::set('db',$db);
+
+$metadataCache = Zend_Cache::factory(
+	// Frontend, Backend
+	'Core', 'File', 
+	// Frontend Options
+	array(
+		'automatic_serialization' => true
+	),
+	// Backend Options 
+	array(
+		'cache_dir' => Zend_Registry::get('site_root') . 'var/cache/tables'
+	)
+);
+Zend_Db_Table::setDefaultMetadataCache($metadataCache);
 
 
 // assemble session namespaces
