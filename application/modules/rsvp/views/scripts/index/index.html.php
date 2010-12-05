@@ -1,6 +1,14 @@
+<?php 
+$this->headStyle()->appendStyle('@import url(/css/rsvp.css);');
+?>
+<script type="text/javascript" src="/js/rsvp/index/index.js"></script>
+<script type="text/javascript">
+Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
+</script>
+
 <h1>Thank You For RSVP-ing <?= $this->invite->mailingName ?>!</h1>
 
-<form method="post" action="/rsvp/index/do">
+<form id="rsvp" method="post" action="/rsvp/index/do">
 <input type="hidden" class="hidden" name="inviteId" value="<?= $this->invite->inviteId ?>" />
 <table border="0" cellpadding="0" cellspacing="0">
 <thead>
@@ -13,15 +21,22 @@
 <tfoot>
 	<tr>
 		<td colspan="3">
-			<a href="javascript:void()">Add Guest</a><br /><br />
+			<?php if(!$this->invite->inviteId) { ?>
+			<a href="javascript:Rsvp.Index.Index.addGuest()">Add Guest</a><br /><br />
+			<?php } /*if(!invite)*/ ?>
 			<button type="submit" class="submit">Save Changes</button>
 		</td>
 	</tr>
 </tfoot>
-<tbody>
+<tbody id="guests">
 <?php foreach($this->guests as $guest) { ?>
 	<tr class="guest">
-		<td class="attending" style="text-align: right;">
+		<td class="attending yes" style="text-align: right;">
+			<label onclick="Rsvp.Index.Index.label_Click.bind(this)()">
+				<span class="yes">Yes</span>
+				<span class="no">No</span>
+			</label>
+			
 			<input 
 				type="hidden" 
 				class="hidden"
@@ -32,38 +47,41 @@
 				type="hidden" 
 				class="hidden"
 				name="attending[]"
-				value="1" />
+				value="1" 
+				title="Attending" />
 				
 			<input 
 				type="checkbox" 
 				class="checkbox"
-				onchange="$(this).previous('input[type=hidden]').value = this.checked ? 1 : ''"
+				onchange="Rsvp.Index.Index.attending_Change.bind(this)()"
 				onclick="this.blur();" 
-				checked="checked" />
+				checked="checked"
+				title="Attending" />
 		</td>
 		
 		<td class="guestName">
 			<input
 				type="text"
-				class="text"
+				class="text required"
 				name="guestName[]"
 				value="<?= $guest->guestName ?>"
+				onclick="$(this).select();"
+				title="Guest's Name"
 				/>
 		</td>
 		
-		<td class="foodId" style="font-size: smaller;">
+		<td class="foodId" style="font-size: smaller; padding: 7px;">
+			<select
+				name="foodId[]" 
+				size="<?= count($this->foods) ?>"
+				class="required"
+				title="Food Choice" />
+				
 		<?php foreach($this->foods as $food) { ?>
 
-			<input
-				id="foodId<?= $this->id()->increment() ?>"
-				type="radio"
-				class="radio"
-				name="foodId[]"
-				value="<?= $food->foodId ?>"
-				<?= $guest->foodId == $food->foodId ? 'checked="checked"' : '' ?>
-				/>
-			<label for="foodId<?= $this->id() ?>"><?= $food->foodName ?></label><br />
+				<option value="<?= $food->foodId ?>"><?= $food->foodName ?></option>
 		<?php } /*foreach(foods)*/ ?>
+			</select>
 		</td>
 		
 	</tr>
