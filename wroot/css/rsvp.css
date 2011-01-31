@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#content thead th span
+{
+	font-size: x-small;
+}
+
+td.attending span.yes, td.attending span.no
+{
+	font-size: 24px;
+	font-weight: 900;
+	padding-right: 10px;
+}
+
+
+td.attending span.yes
+{
+	color: green;
+}
+
+td.attending span.no
+{
+	color: red;
+}
+
+td.attending.yes span.yes, td.attending span.no
+{
+	display: inherit;
+}
+
+td.attending span.yes, td.attending.yes span.no
+{
+	display: none;
+}
+
+td.foodId
+{
+	padding: 7px;
+}
+
+td.foodId option
+{
+	font-size: smaller; 
+}
