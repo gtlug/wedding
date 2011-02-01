@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?= $this->layout()->site ?></title>
-<?= $this->headStyle() ?>
+<?= $this->headStyle()->prependStyle('@import url(/css/main.css);') ?>
 <script src="/js/prototype.js" type="text/javascript" language="javascript"></script>
 <script src="/js/common.js" type="text/javascript" language="javascript"></script>
 <?= $this->headScript() ?>
