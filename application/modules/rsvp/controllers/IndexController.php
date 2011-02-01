@@ -12,29 +12,23 @@ require_once("Abstract.php");
 class Rsvp_IndexController extends Rsvp_Controller_Abstract
 {
 	const PARAM_NAME = 'name';
+	const PARAM_INVITE_ID = 'inviteId';
+	const PARAM_GUEST_ID = 'guestId';
+	const PARAM_GUEST_NAME = 'guestName';
+	const PARAM_GUEST_ATTENDING = 'attending';
+	const PARAM_FOOD_ID = 'foodId';
 	
-	/**
-	 * @var Wedding_Db_Table_Aliases
-	 */
-	protected $_aliasesTable = null;
 	
-	/**
-	 * @var Wedding_Db_Table_Invites
-	 */
-	protected $_invitesTable = null;
-	
-	/**
-	 * @var Wedding_Db_Table_Guests
-	 */
-	protected $_guestsTable = null;
-
-	/**
-	 * @var Wedding_Db_Table_Foods
-	 */
-	protected $_foodsTable = null;
 	
 	protected $_defaultGuestName = "Guest's Name";
 	
+	protected $_filters = array(
+		self::PARAM_INVITE_ID => array('Digits'),
+		self::PARAM_GUEST_ID => array('Digits'),
+		self::PARAM_GUEST_NAME => array('Alnum', array('allowwhitespace'=>true)),
+		self::PARAM_GUEST_ATTENDING => array('Digits'),
+		self::PARAM_FOOD_ID => array('Digits')
+	);
 	
 	
 	/**
@@ -110,6 +104,113 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	public function widgetAction()
 	{
 		
+	}
+	
+	public function doAction()
+	{
+		header('content-type: text/plain');
+		
+		$params = $_POST;
+		$inviteId = $params[self::PARAM_INVITE_ID];
+		$guestsTable = $this->guestsTable();
+		$guestCols = $guestsTable->info(Zend_Db_Table::COLS);
+		$guests = $this->invertKeys($params, $guestCols);
+		
+		$now = new Zend_Db_Expr('NOW()');
+		$filterKeys = array_flip(array_keys($this->_filters));
+		foreach($guests as $guest)
+		{
+			$guest[self::PARAM_INVITE_ID] = $inviteId;
+			// strip out keys we don't have filters for
+			$guest = array_intersect_key($guest, $filterKeys);
+			foreach($guest as $k=>&$v)
+			{
+				$args = array_merge(array($v), $this->_filters[$k]);
+				$v = call_user_func_array('Zend_Filter::filterStatic', $args);
+			}
+			$guestRow = null;
+			if($guest[self::PARAM_GUEST_ID])
+			{
+				$guestRows = $guestsTable->find($guest[self::PARAM_GUEST_ID]);
+				if(count($guestRows))
+				{
+					$guestRow = $guestRows[0];
+				}
+			}
+			if(null === $guestRow)
+			{
+				if(!$guest[self::PARAM_GUEST_ATTENDING])
+				{
+					// if if the unnamed guest isn't even
+					// attending, we don't care.  we won't
+					// add them.
+					continue;
+				}
+				$guestRow = $this->createGuest();
+				$guest['dateAdded'] = $now;
+			}
+			$guest['dateUpdated'] = $now;
+			
+			// I have to use a different value name 
+			// because there's an odd PHP bug that breaks it 
+			foreach($guest as $k=>$v2)
+			{
+				if(!$v2) continue;
+				$guestRow->{$k} = $v2;
+			}
+			
+			$guestRow->save();
+			//print_r($guestRow->toArray());
+		}
+		//print_r($guests);
+		$this->_redirect('/rsvp/index/finished');
+	}
+	
+	public function finishedAction()
+	{
+		
+	}
+	
+	/**
+	 * Invert keys in a two-dimensional array
+	 * $array[$a][$b] => $array[$b][$a]
+	 * Useful for transforming array POST data
+	 * into object relational data
+	 * 
+	 * @param array $array
+	 * @param array $keys 
+	 * 		Keys to pull from $array.  
+	 * 		If null, all keys in $array are used
+	 * 		Non-existent keys are ignored.
+	 * @return array
+	 */
+	public function invertKeys($array, $keys = null)
+	{
+		if(null === $keys)
+		{
+			$keys = array_keys($array);
+		}
+		$newArray = array();
+		
+		foreach($keys as $k1)
+		{
+			if(!isset($array[$k1]))
+				continue;
+			
+			$v1 = $array[$k1];
+			
+			if(!is_array($v1)) 
+				continue;
+				
+			foreach($v1 as $k2=>$v2)
+			{
+				if(!isset($newArray[$k2]))
+					$newArray[$k2] = array();
+					
+				$newArray[$k2][$k1] = $v2;
+			}
+		}
+		return $newArray;
 	}
 	
 	public function createGuest(array $data = array())
@@ -188,61 +289,6 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 		$foods = $foodsTable->fetchAll();
 		return $foods;
 	}	
-	
-	/**
-	 * @return Wedding_Db_Table_Aliases
-	 */
-	public function aliasesTable()
-	{
-		if(null === $this->_aliasesTable)
-		{
-			$this->_aliasesTable = new Wedding_Db_Table_Aliases($this->db());
-		}
-		return $this->_aliasesTable;
-	}
-	
-	/**
-	 * @return Wedding_Db_Table_Invites
-	 */
-	public function invitesTable()
-	{
-		if(null === $this->_invitesTable)
-		{
-			$this->_invitesTable = new Wedding_Db_Table_Invites($this->db());
-		}
-		return $this->_invitesTable;
-	}
-	
-	/**
-	 * @return Wedding_Db_Table_Guests
-	 */
-	public function guestsTable()
-	{
-		if(null === $this->_guestsTable)
-		{
-			$this->_guestsTable = new Wedding_Db_Table_Guests($this->db());
-		}
-		return $this->_guestsTable;
-	}
-	
-	/**
-	 * @return Wedding_Db_Table_Foods
-	 */
-	public function foodsTable()
-	{
-		if(null === $this->_foodsTable)
-		{
-			$this->_foodsTable = new Wedding_Db_Table_Foods($this->db());
-		}
-		return $this->_foodsTable;
-	}
-	
-	
-	public function db()
-	{
-		return Zend_Registry::get('db');
-	}
-	
 	/**
 	 * 
 	 * @param string $name
