@@ -15,9 +15,11 @@ Rsvp.Index.Widget = {
 		self.form = $(self.form);
 		self.input = self.form.down('input[name=name]');
 		
+		self.input.observe('focus', self.input_Focus);
+		self.input.observe('blur', self.input_Blur);
 		self.form.observe('submit', self.form_Submit);
 		
-		self.defaultName = self.input.getAttribute('value');
+		self.defaultName = self.input.readAttribute('value');
 	},
 	
 	form_Submit: function (event)
@@ -39,6 +41,28 @@ Rsvp.Index.Widget = {
 		{
 			alert("Please use your full name");
 			return event.stop();
+		}
+	},
+	
+	input_Focus: function()
+	{
+		var self = Rsvp.Index.Widget;
+		var name = $F(self.input);
+		
+		if(name == self.defaultName)
+		{
+			self.input.value = '';
+		}
+	},
+	
+	input_Blur: function()
+	{
+		var self = Rsvp.Index.Widget;
+		var name = $F(self.input);
+		
+		if(!name)
+		{
+			self.input.value = self.defaultName;
 		}
 	}
 };
