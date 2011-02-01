@@ -1,4 +1,5 @@
-<form method="post" action="/rsvp">
+<script type="text/javascript" src="/js/rsvp/index/widget.js"></script>
+<form method="post" action="/rsvp" id="rsvp_index_widget">
 	<input 
 		type="text" 
 		class="text"

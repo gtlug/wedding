@@ -13,9 +13,18 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 <table border="0" cellpadding="0" cellspacing="0">
 <thead>
 	<tr>
-		<th class="attending">Attending?</th>
-		<th class="guestName">Guest Name</th>
-		<th class="foodId">Food Choice</th>
+		<th class="attending">
+			Attending<br />
+			<span>(yes or no)</span>
+		</th>
+		<th class="guestName">
+			Guest Names<br />
+			<span>(including yourself)</span>
+		</th>
+		<th class="foodId">
+			Food Choice<br />
+			<span>(choose one)</span>
+		</th>
 	</tr>
 </thead>
 <tfoot>
@@ -24,6 +33,7 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 			<?php if(!$this->invite->inviteId) { ?>
 			<a href="javascript:Rsvp.Index.Index.addGuest()">Add Guest</a><br /><br />
 			<?php } /*if(!invite)*/ ?>
+			
 			<button type="submit" class="submit">Save Changes</button>
 		</td>
 	</tr>
@@ -70,7 +80,7 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 				/>
 		</td>
 		
-		<td class="foodId" style="font-size: smaller; padding: 7px;">
+		<td class="foodId">
 			<select
 				name="foodId[]" 
 				size="<?= count($this->foods) ?>"
@@ -79,7 +89,11 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 				
 		<?php foreach($this->foods as $food) { ?>
 
-				<option value="<?= $food->foodId ?>"><?= $food->foodName ?></option>
+				<option 
+					value="<?= $food->foodId ?>"
+					<?= $food->foodId == $guest->foodId ? 'selected="selected"' : "" ?>>
+						<?= $food->foodName ?>
+				</option>
 		<?php } /*foreach(foods)*/ ?>
 			</select>
 		</td>
@@ -97,3 +111,5 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 		<dd><?= $food->foodDesc ?></dd>
 <?php } /*foreach(foods)*/ ?>
 </dl>
+
+<p>If you have any questions or comments, please call us using the phone number found on your invitation.</p>
