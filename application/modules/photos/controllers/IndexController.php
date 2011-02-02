@@ -18,7 +18,7 @@ class Photos_IndexController extends Photos_Controller_Abstract
 	
 	public function indexAction()
 	{
-		$tag = $this->_getParam('tag', 'fragfest12');
+		$tag = $this->_getParam('tag', 'whitevanberlowedding');
 
 		Zend_Paginator::setCache($this->_cache);
 		$cacheId = "paginator_$tag";
