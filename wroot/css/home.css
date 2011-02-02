@@ -45,6 +45,11 @@ body
 	margin: 0px;
 }
 
+#left h1
+{
+	width: 100%;	
+}
+
 #left p
 {
 	top: 200px;
