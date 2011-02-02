@@ -24,7 +24,6 @@ Rsvp.Index.Widget = {
 	
 	form_Submit: function (event)
 	{
-		event.stop();
 		var self = Rsvp.Index.Widget;
 		var name = $F(self.input);
 		
