@@ -4,7 +4,7 @@ $this->headStyle()->appendStyle('@import url(/css/home.css);');
 <div id="outer">
 
 	<div id="left">
-		<h1>Adam VanBerlo &amp; Lindsey White <br />Wedding</h1>
+		<h1>Lindsey White &amp;<br/>Adam VanBerlo<br />Wedding</h1>
 		<p>Picture</p>
 	</div>
 	<div id="right">
