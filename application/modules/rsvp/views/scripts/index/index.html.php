@@ -1,5 +1,5 @@
 <?php 
-$this->headStyle()->appendStyle('@import url(/css/rsvp.css);');
+$this->headLink()->appendStylesheet('/css/rsvp.css');
 ?>
 <script type="text/javascript" src="/js/rsvp/index/index.js"></script>
 <script type="text/javascript">
