@@ -6,7 +6,7 @@ $this->headLink()->appendStylesheet('/css/rsvp.css');
 Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 </script>
 
-<h1>Thank You For RSVP-ing <?= $this->invite->mailingName ?>!</h1>
+<h1>Thank You For RSVP-ing <?= $this->escape($this->invite->mailingName) ?>!</h1>
 
 <form id="rsvp" method="post" action="/rsvp/index/do">
 <input type="hidden" class="hidden" name="inviteId" value="<?= $this->invite->inviteId ?>" />
@@ -85,7 +85,7 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 				name="foodId[]" 
 				size="<?= count($this->foods) ?>"
 				class="required"
-				title="Food Choice" />
+				title="Food Choice">
 				
 		<?php foreach($this->foods as $food) { ?>
 
