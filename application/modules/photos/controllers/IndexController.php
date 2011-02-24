@@ -74,8 +74,8 @@ class Photos_IndexController extends Photos_Controller_Abstract
 		$auth = $this->_auth->getIdentity();
 		$this->_flickr->token = $auth->getToken();
 		$results = $this->_flickr->privateTagSearch(
-			'fragfest12', 
-			//'whitevanberlowedding',
+			//'fragfest12', 
+			'whitevanberlowedding',
 			$this->_secret,
 			array(
 				'user_id' => $NiX0n,
