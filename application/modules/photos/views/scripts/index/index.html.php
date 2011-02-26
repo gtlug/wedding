@@ -1,5 +1,5 @@
 <?php 
-$this->headTitle('Photos');
+$this->headTitle('Photos [Page ' . $this->photos->getCurrentPageNumber() .  ' of ' . $this->photos->count() . ']');
 $this->headLink()->appendStylesheet('/css/pages.css');
 ?>
 <h1>Photos</h1>
