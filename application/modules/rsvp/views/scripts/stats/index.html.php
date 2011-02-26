@@ -13,7 +13,6 @@ foreach($this->guests as $guest)
 	{
 		$foodSelectionCounts[$guest->foodId] = 0;
 	}
-	$foodSelectionCounts[$guest->foodId]++;
 	
 	if($guest->inviteId)
 	{
@@ -35,6 +34,7 @@ foreach($this->guests as $guest)
 	if($guest->attending)
 	{
 		$attending++;
+		$foodSelectionCounts[$guest->foodId]++;
 	}
 
 }

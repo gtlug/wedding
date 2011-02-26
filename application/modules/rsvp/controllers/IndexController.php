@@ -23,11 +23,11 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	protected $_defaultGuestName = "Guest's Name";
 	
 	protected $_filters = array(
-		self::PARAM_INVITE_ID => array('Digits'),
-		self::PARAM_GUEST_ID => array('Digits'),
+		self::PARAM_INVITE_ID => array('Int'),
+		self::PARAM_GUEST_ID => array('Int'),
 		self::PARAM_GUEST_NAME => array('Alnum', array('allowwhitespace'=>true)),
-		self::PARAM_GUEST_ATTENDING => array('Digits'),
-		self::PARAM_FOOD_ID => array('Digits')
+		self::PARAM_GUEST_ATTENDING => array('Int'),
+		self::PARAM_FOOD_ID => array('Int')
 	);
 	
 	
@@ -115,7 +115,6 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 		$guestsTable = $this->guestsTable();
 		$guestCols = $guestsTable->info(Zend_Db_Table::COLS);
 		$guests = $this->invertKeys($params, $guestCols);
-		
 		$now = new Zend_Db_Expr('NOW()');
 		$filterKeys = array_flip(array_keys($this->_filters));
 		foreach($guests as $guest)
@@ -155,7 +154,11 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 			// because there's an odd PHP bug that breaks it 
 			foreach($guest as $k=>$v2)
 			{
-				if(!$v2) continue;
+				/*if(empty($v2))
+				{
+					print "$k is empty()\n";
+					continue;
+				}*/
 				$guestRow->{$k} = $v2;
 			}
 			

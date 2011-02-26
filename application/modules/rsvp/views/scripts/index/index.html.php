@@ -87,7 +87,12 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 				size="<?= count($this->foods) ?>"
 				class="required"
 				title="Food Choice">
-				
+				<option 
+					value=""
+					style="display: none;"
+					<?= !$guest->foodId ? 'selected="selected"' : "" ?>>
+					<!-- DATA HACK -->
+				</option>
 		<?php foreach($this->foods as $food) { ?>
 
 				<option 
