@@ -1,4 +1,5 @@
 <?php 
+$this->headTitle('Welcome');
 $this->headLink()->appendStylesheet('/css/home.css');
 ?>
 <div id="outer">

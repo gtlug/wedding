@@ -97,6 +97,16 @@ abstract class Rsvp_Controller_Abstract extends Zend_Controller_Action
 		return Zend_Registry::get('db');
 	}
 	
+	/**
+	 * @return Zend_Db_Table_Rowset
+	 */
+	public function fetchFoods()
+	{
+		$foodsTable = $this->foodsTable();
+		$foods = $foodsTable->fetchAll();
+		return $foods;
+	}	
+	
 }
 
 ?>

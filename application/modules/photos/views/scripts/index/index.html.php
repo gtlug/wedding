@@ -1,5 +1,6 @@
 <?php 
-$this->headStyle()->appendStyle('@import url(/css/pages.css);');
+$this->headTitle('Photos');
+$this->headLink()->appendStylesheet('/css/pages.css');
 ?>
 <h1>Photos</h1>
 

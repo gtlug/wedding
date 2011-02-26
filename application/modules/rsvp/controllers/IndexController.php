@@ -281,15 +281,6 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	}
 	
 	/**
-	 * @return Zend_Db_Table_Rowset
-	 */
-	public function fetchFoods()
-	{
-		$foodsTable = $this->foodsTable();
-		$foods = $foodsTable->fetchAll();
-		return $foods;
-	}	
-	/**
 	 * 
 	 * @param string $name
 	 * @return Zend_Db_Table_Row

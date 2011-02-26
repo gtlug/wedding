@@ -1,3 +1,6 @@
+<?php 
+$this->headTitle('RSVP');
+?>
 <h1>Thank You For RSVP-ing!</h1>
 
 <p>If you need to update your RSVP later you can.</p>

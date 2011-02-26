@@ -1,4 +1,5 @@
 <?php 
+$this->headTitle('RSVP');
 $this->headLink()->appendStylesheet('/css/rsvp.css');
 ?>
 <script type="text/javascript" src="/js/rsvp/index/index.js"></script>
