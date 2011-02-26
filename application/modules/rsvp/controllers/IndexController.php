@@ -23,11 +23,11 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	protected $_defaultGuestName = "Guest's Name";
 	
 	protected $_filters = array(
-		self::PARAM_INVITE_ID => array('Int'),
-		self::PARAM_GUEST_ID => array('Int'),
+		self::PARAM_INVITE_ID => array('Digits'),
+		self::PARAM_GUEST_ID => array('Digits'),
 		self::PARAM_GUEST_NAME => array('Alnum', array('allowwhitespace'=>true)),
-		self::PARAM_GUEST_ATTENDING => array('Int'),
-		self::PARAM_FOOD_ID => array('Int')
+		self::PARAM_GUEST_ATTENDING => array('Digits'),
+		self::PARAM_FOOD_ID => array('Digits')
 	);
 	
 	
@@ -124,6 +124,13 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 			$guest = array_intersect_key($guest, $filterKeys);
 			foreach($guest as $k=>&$v)
 			{
+				if(!$v)
+				{
+					// it's easier to deal with nulls
+					// than it is to filter false-equivolent values
+					$v = null;
+					continue;
+				}
 				$args = array_merge(array($v), $this->_filters[$k]);
 				$v = call_user_func_array('Zend_Filter::filterStatic', $args);
 			}
@@ -154,18 +161,12 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 			// because there's an odd PHP bug that breaks it 
 			foreach($guest as $k=>$v2)
 			{
-				/*if(empty($v2))
-				{
-					print "$k is empty()\n";
-					continue;
-				}*/
 				$guestRow->{$k} = $v2;
 			}
 			
 			$guestRow->save();
 			//print_r($guestRow->toArray());
 		}
-		//print_r($guests);
 		$this->_redirect('/rsvp/index/finished');
 	}
 	
