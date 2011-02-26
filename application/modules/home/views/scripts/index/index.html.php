@@ -1,5 +1,5 @@
 <?php 
-$this->headStyle()->appendStyle('@import url(/css/home.css);');
+$this->headLink()->appendStylesheet('/css/home.css');
 ?>
 <div id="outer">
 
@@ -14,9 +14,19 @@ $this->headStyle()->appendStyle('@import url(/css/home.css);');
 			</div>
 		</div>
 		<div id="bottom">
-			<p><a href="#">Visit Registry</a></p>
+			<p style="float: left;" id="registryLink">
+				<a 
+					href="http://www.bedbathandbeyond.com/regGiftRegistry.asp?wrn=-1622868992&"
+					title="Visit Registry"
+					target="_blank">
+					<img 
+						src="/images/home/bedBathBeyondLogo.jpg" 
+						alt="Visit Registry" 
+						width="33%" />
+				</a>
+			</p>
 			<p><a href="/photos">View Photos</a></p>
-			<div id="photos" style="padding-left: 20px;">
+			<div id="photos" style="padding-left: 20px; clear: left;">
 <?= $this->action('widget', 'index', 'photos') ?>
 			</div>		
 		</div>

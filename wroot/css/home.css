@@ -101,3 +101,13 @@ body
 	color: black;
 }
 
+
+#registryLink a img
+{
+	border: 3px solid transparent;
+}
+
+#registryLink a:hover img
+{
+	border-color:blue;
+}
