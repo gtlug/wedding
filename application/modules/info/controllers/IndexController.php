@@ -9,7 +9,7 @@ require_once("Abstract.php");
  * URI scheme.  The third part is the action name, which are
  * methods in the conroller class.
  */
-class Home_IndexController extends Home_Controller_Abstract
+class Info_IndexController extends Info_Controller_Abstract
 {
 	/**
 	* This action can be accessed at

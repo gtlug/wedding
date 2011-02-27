@@ -15,7 +15,7 @@ $this->headLink()->appendStylesheet('/css/home.css');
 			</div>
 		</div>
 		<div id="bottom">
-			<p style="float: left;" id="registryLink">
+			<p style="float: left; width: 100px;" id="registryLink">
 				<a 
 					href="http://www.bedbathandbeyond.com/regGiftRegistry.asp?wrn=-1622868992&"
 					title="Visit Registry"
@@ -23,9 +23,10 @@ $this->headLink()->appendStylesheet('/css/home.css');
 					<img 
 						src="/images/home/bedBathBeyondLogo.jpg" 
 						alt="Visit Registry" 
-						width="33%" />
+						width="80" />
 				</a>
 			</p>
+			<p style=""><a href="/info">More Information</a></p>
 			<p><a href="/photos">View Photos</a></p>
 			<div id="photos" style="padding-left: 20px; clear: left;">
 <?= $this->action('widget', 'index', 'photos') ?>

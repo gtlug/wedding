@@ -2,3 +2,18 @@ body
 {
 	font-family: sans-serif;
 }
+
+a
+{
+	text-decoration: none;
+}
+
+a:visited
+{
+	color: blue;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
