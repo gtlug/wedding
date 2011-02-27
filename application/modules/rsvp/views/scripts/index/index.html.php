@@ -1,6 +1,7 @@
 <?php 
 $this->headTitle('RSVP');
 $this->headLink()->appendStylesheet('/css/rsvp.css');
+$selected = 'selected="selected"';
 ?>
 <script type="text/javascript" src="/js/rsvp/index/index.js"></script>
 <script type="text/javascript">
@@ -90,14 +91,14 @@ Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 				<option 
 					value=""
 					style="display: none;"
-					<?= !$guest->foodId ? 'selected="selected"' : "" ?>>
+					<?= !$guest->foodId ? $selected : "" ?>>
 					<!-- DATA HACK -->
 				</option>
 		<?php foreach($this->foods as $food) { ?>
 
 				<option 
 					value="<?= $food->foodId ?>"
-					<?= $food->foodId == $guest->foodId ? 'selected="selected"' : "" ?>>
+					<?= $food->foodId == $guest->foodId ? $selected : "" ?>>
 						<?= $food->foodName ?>
 				</option>
 		<?php } /*foreach(foods)*/ ?>
