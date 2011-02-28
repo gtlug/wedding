@@ -53,7 +53,7 @@ $this->headLink()->appendStylesheet('/css/info.css');
 
 <p>
 	We have reserved a blocks of rooms for our event at the <strong>Park Place Hotel</strong> (same location as reception).  
-	If you would like to take advantage of our block rate (~$80/night, must be for two nights), 
+	If you would like to take advantage of our block rate (~$80/night, must be for two or more nights), 
 	simply call <strong>231-946-5000</strong> and mention the White-VanBerlo wedding.	
 	If you'd like more information on the the Park Place, you can also 
 	<a href="http://www.park-place-hotel.com/">visit their website</a>. 
