@@ -60,6 +60,6 @@ $this->headLink()->appendStylesheet('/css/info.css');
 
 <p>
 	If for some reason you choose not to sleep at the Park Place; first, please be responsible and don't drink and drive; 
-	secondly, there are a lot of <a href="http://maps.google.com/maps?near=300+E+State+St,+Traverse+City,+MI+49684&q=hotel">nearby hotels</a>
+	secondly, there are a lot of <a href="http://maps.google.com/maps?near=300+E+State+St,+Traverse+City,+MI+49684&amp;q=hotel">nearby hotels</a>
 	to choose from.
 </p>
