@@ -26,18 +26,31 @@ class Rsvp_StatsController extends Rsvp_Controller_Abstract
 		$invitesTable = $this->invitesTable();
 		$invitesName = $invitesTable->info(Zend_Db_Table::NAME);
 		$guestsName = $guestsTable->info(Zend_Db_Table::NAME);
+		
+		$innerSelect = $invitesTable
+			->select()
+			->from($invitesName, array('inviteId', 'guests'))
+			->joinInner(
+				$guestsName,
+				"$invitesName.inviteId = $guestsName.inviteId", 
+				array()
+			)
+			->where("$guestsName.dateAdded <> $guestsName.dateUpdated")
+			->group('inviteId')
+			->group('guests')
+		;
 		$select = $guestsTable
 			->select()
 			->from($guestsName)
 			// by default, only guests table columns are allowed
 			->setIntegrityCheck(false)
 			->joinLeft(
-				$invitesName, 
+				array($invitesName => new Zend_Db_Expr("($innerSelect)")), 
 				"$guestsName.inviteId = $invitesName.inviteId",
 				// we want the # of guests expecting 
 				array('guests')
 			)
-			->where("$guestsName.dateAdded <> $guestsName.dateUpdated")
+			->where("$invitesName.inviteId IS NOT NULL")
 			->orWhere("$guestsName.inviteId IS NULL")
 		;
 		$guests = $guestsTable->fetchAll($select);
