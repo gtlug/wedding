@@ -2,7 +2,7 @@
 $this->headTitle('Stats');
 
 $guestsCount = $this->guests->count();
-$rogueCount = 0;
+$adhocCount = 0;
 $foodSelectionCounts = array();
 $remainders = array();
 $attending = 0;
@@ -28,7 +28,7 @@ foreach($this->guests as $guest)
 	}
 	else
 	{
-		$rogueCount++;
+		$adhocCount++;
 	}
 	
 	if($guest->attending)
@@ -50,8 +50,8 @@ $declines = array_sum($remainders);
 	<dt>Declines</dt>
 	<dd><?= $declines ?></dd>	
 
-	<dt>Rogue Count</dt>
-	<dd><?= $rogueCount ?></dd>
+	<dt>Ad-Hoc Count</dt>
+	<dd><?= $adhocCount ?></dd>
 	
 	<dt>Food Choices</dt>
 	<dd>

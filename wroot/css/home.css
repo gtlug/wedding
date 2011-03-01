@@ -11,21 +11,22 @@ body
 
 #outer
 {
-	background-color: black;
 	margin: auto; 
 	width: 800px; 
-	height: 550px; 
-	border: 3px solid black;
+	height: 583px;
+	background: url(/images/home/home_background.png) 0px 0px no-repeat;
+	/*border: 3px solid black;
 	border-radius: 15px;
 	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
+	-webkit-border-radius: 15px;*/
 }
 
 #left
 {
+	position: relative;
 	float: left;
 	height: 100%;
-	width: 450px;
+	width: 470px;
 	color: white;
 	border-right: 3px solid black;
 	/*border-top-right-radius: 15px;
@@ -34,49 +35,63 @@ body
 	-moz-border-radius-bottomright: 15px;
 	-webkit-border-top-right-radius: 15px;
 	-webkit-border-bottom-right-radius: 15px;*/
-	position: relative;
 }
 
-#left h1, #left h2, #left h3, #left p
-{
-	position: absolute;
-	text-align: center;
-	top: 30px;
-	margin: 0px;
+#homeLeftButtons {
+	position:relative;
+	width: 350px;
+	left: 60px;
+	top: 450px;
+	height: 75px;
 }
 
-#left h1
-{
-	width: 100%;	
+#homeLeftButtons a span{
+	display: none;
 }
 
-#left p
+#moreInfoLink {
+	display: inline-block;
+	background:url(/images/home/more_info_button_off.png) 0px 0px no-repeat;
+	height: 44px;
+	width: 128px;
+	cursor:pointer;
+}
+
+#registryLink
 {
-	top: 200px;
-	left: 50px;
-	right: 50px;
-	height: 300px;
-	border: white solid 1px;
+	display: inline-block;
+	background: url(/images/home/gift_registry.png) 0px 0px no-repeat;
+	height: 63px;
+	width: 107px;
+	margin-left: 100px;
+	cursor: pointer;
+	border-bottom: 3px solid transparent;
+	_border-bottom-color: black;
+}
+
+#registryLink:hover
+{
+	border-bottom-color: #384a9c;
 }
 
 #right
 {
+	position:relative;
 	float: right;
-	width: 340px;
-	padding-right: 5px;
+	width: 320px;
 }
 
 #top
 {
-	height: 200px;
-	background-color: grey;
-	color: black;
-	border-bottom: 3px solid black;
+	position:relative;
+	height: 150px;
+	color: #fff;
 }
 
 #rsvp
 {
-	padding: 50px 15px 20px 25px;
+	position:relative;
+	top: 75px;
 }
 
 #rsvp input.text
@@ -96,18 +111,37 @@ body
 
 #bottom
 {
-	height: 312px;
-	background-color: white;
-	color: black;
+	margin-top: 65px;
 }
 
-
-#registryLink a img
-{
-	border: 3px solid transparent;
+#viewPhotosLink {
+	display: inline-block;
+	background:url(/images/home/view_photos_button_off.png) 0px 0px no-repeat;
+	height: 44px;
+	width: 108px;
+	margin-bottom: 5px;
 }
 
-#registryLink a:hover img
+#viewPhotosLink span {
+	display:none;
+}
+
+#photos {
+	position: relative;
+	width: 300px;
+	height: 348px;
+	overflow: hidden;
+}
+
+input.text
 {
-	border-color:blue;
+	border: none;
+	padding: 3px;
+	font-size: larger;
+	margin-right: 5px;
+}
+
+button.submit
+{
+	font-size: larger;
 }

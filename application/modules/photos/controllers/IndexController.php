@@ -42,7 +42,7 @@ class Photos_IndexController extends Photos_Controller_Abstract
 		}
 
 		$paginator->setDefaultScrollingStyle('Sliding');
-		$paginator->setItemCountPerPage((integer)$this->_getParam('per', 12));
+		$paginator->setItemCountPerPage((integer)$this->_getParam('per', 18));
 		$paginator->setCurrentPageNumber((integer)$this->_getParam('page', 1));
 		$paginator->setCacheEnabled(true);
 	

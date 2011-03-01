@@ -1,5 +1,111 @@
 @CHARSET "UTF-8";
 
+body
+{
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	padding-top: 75px;
+}
+
+
+
+#rsvpOuter {
+	position: relative;
+	margin: auto; 
+	width: 800px; 
+	background: #000;
+	color: #FFF;
+}
+
+
+#rsvpOuter #rsvpHeader {
+	background: url(/images/rsvp/rsvp_header.png) 0px 0px no-repeat;
+	height: 103px;
+	width: 800px;
+}
+
+#rsvpOuter #rsvpContent {
+	color: #fff;
+	width: 760px;
+	margin: 20px;
+	height: 100%;
+	clear:both;
+}
+
+
+#footer {
+	display:block;
+	background: url(/images/site_footer.png) 0px 0px no-repeat;
+	height: 60px;
+	width: 800px;
+}
+
+
+
+#rsvpOuter a span {
+	display:none;
+}
+
+#rsvpOuter .homeButton {
+	float: right;
+	margin: 10px 10px 0px 0px;
+	background: url(/images/buttons/home_button.png) 0px 0px no-repeat;
+	height: 44px;
+	width: 77px;
+}
+
+#rsvpOuter #rsvpContent h1{
+	font-size: 24px;
+	margin: 0px 0px 15px 0px;
+}
+
+#rsvpOuter #rsvpContent h2{
+	font-size: 16px;
+	margin: 15px 0px 0px 0px;
+}
+
+#rsvpOuter #rsvpContent h3{
+	font-size: 18px;
+	margin: 20px 0px 0px 0px;
+}
+
+#rsvpOuter #rsvpContent dl {
+	font-size: 13px;
+	margin: 5px 0px 10px 0px;
+}
+
+#rsvpOuter #rsvpContent dl dt {
+	font-size: 14px;
+	font-weight: 700;
+	margin: 5px 0px 0px 0px;
+}
+
+#rsvpOuter #rsvpContent dl dd {
+	margin: 0px 0px 5px 5px;
+}
+
+
+#rsvpOuter #rsvpContent p {
+	font-size: 13px;
+	margin: 20px 0px 10px 0px;
+}
+
+#rsvpOuter #rsvpContent a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+
+table {
+	margin-left: 20px;
+}
+
+table td {
+	padding-right: 20px;
+}
+
 #content thead th span
 {
 	font-size: x-small;

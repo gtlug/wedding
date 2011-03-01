@@ -7,116 +7,126 @@ $selected = 'selected="selected"';
 <script type="text/javascript">
 Rsvp.Index.Index.defaultGuestName = "<?= $this->defaultGuestName ?>";
 </script>
+<div id="rsvpOuter">
+	<div id="rsvpHeader">
+		<a class="homeButton" href="/home/"><span>Home Button</span></a>
+	</div>
 
-<h1>Thank You For RSVP-ing <?= $this->escape($this->invite->mailingName) ?>!</h1>
+	<div id="rsvpContent">
 
-<form id="rsvp" method="post" action="/rsvp/index/do">
-<input type="hidden" class="hidden" name="inviteId" value="<?= $this->invite->inviteId ?>" />
-<table border="0" cellpadding="0" cellspacing="0">
-<thead>
-	<tr>
-		<th class="attending">
-			Attending<br />
-			<span>(yes or no)</span>
-		</th>
-		<th class="guestName">
-			Guest Names<br />
-			<span>(including yourself)</span>
-		</th>
-		<th class="foodId">
-			Food Choice<br />
-			<span>(choose one)</span>
-		</th>
-	</tr>
-</thead>
-<tfoot>
-	<tr>
-		<td colspan="3">
-			<?php if(!$this->invite->inviteId) { ?>
-			<a href="javascript:Rsvp.Index.Index.addGuest()">Add Guest</a><br /><br />
-			<?php } /*if(!invite)*/ ?>
-			
-			<button type="submit" class="submit">Save Changes</button>
-		</td>
-	</tr>
-</tfoot>
-<tbody id="guests">
-<?php foreach($this->guests as $guest) { ?>
-	<tr class="guest">
-		<td class="attending yes" style="text-align: right;">
-			<label onclick="Rsvp.Index.Index.label_Click.bind(this)()">
-				<span class="yes">Yes</span>
-				<span class="no">No</span>
-			</label>
-			
-			<input 
-				type="hidden" 
-				class="hidden"
-				name="guestId[]"
-				value="<?= $guest->guestId ?>" />
+		<h1>Thank You For RSVP-ing <?= $this->escape($this->invite->mailingName) ?>!</h1>
+	
+		<form id="rsvp" method="post" action="/rsvp/index/do">
+		<input type="hidden" class="hidden" name="inviteId" value="<?= $this->invite->inviteId ?>" />
+		<table border="0" cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th class="attending">
+					Attending<br />
+					<span>(yes or no)</span>
+				</th>
+				<th class="guestName">
+					Guest Names<br />
+					<span>(including yourself)</span>
+				</th>
+				<th class="foodId">
+					Food Choice<br />
+					<span>(choose one)</span>
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="3">
+					<?php if(!$this->invite->inviteId) { ?>
+					<a href="javascript:Rsvp.Index.Index.addGuest()">Add Guest</a><br /><br />
+					<?php } /*if(!invite)*/ ?>
+					
+					<button type="submit" class="submit">Save Changes</button>
+				</td>
+			</tr>
+		</tfoot>
+		<tbody id="guests">
+		<?php foreach($this->guests as $guest) { ?>
+			<tr class="guest">
+				<td class="attending yes" style="text-align: right;">
+					<label onclick="Rsvp.Index.Index.label_Click.bind(this)()">
+						<span class="yes">Yes</span>
+						<span class="no">No</span>
+					</label>
+					
+					<input 
+						type="hidden" 
+						class="hidden"
+						name="guestId[]"
+						value="<?= $guest->guestId ?>" />
+						
+					<input 
+						type="hidden" 
+						class="hidden"
+						name="attending[]"
+						value="1" 
+						title="Attending" />
+						
+					<input 
+						type="checkbox" 
+						class="checkbox"
+						onchange="Rsvp.Index.Index.attending_Change.bind(this)()"
+						onclick="this.blur();" 
+						checked="checked"
+						title="Attending" />
+				</td>
 				
-			<input 
-				type="hidden" 
-				class="hidden"
-				name="attending[]"
-				value="1" 
-				title="Attending" />
+				<td class="guestName">
+					<input
+						type="text"
+						class="text required"
+						name="guestName[]"
+						value="<?= $guest->guestName ?>"
+						onclick="$(this).select();"
+						title="Guest's Name"
+						/>
+				</td>
 				
-			<input 
-				type="checkbox" 
-				class="checkbox"
-				onchange="Rsvp.Index.Index.attending_Change.bind(this)()"
-				onclick="this.blur();" 
-				checked="checked"
-				title="Attending" />
-		</td>
+				<td class="foodId">
+					<select
+						name="foodId[]" 
+						size="<?= count($this->foods) ?>"
+						class="required"
+						title="Food Choice">
+						<option 
+							value=""
+							style="display: none;"
+							<?= !$guest->foodId ? $selected : "" ?>>
+							<!-- DATA HACK -->
+						</option>
+				<?php foreach($this->foods as $food) { ?>
 		
-		<td class="guestName">
-			<input
-				type="text"
-				class="text required"
-				name="guestName[]"
-				value="<?= $guest->guestName ?>"
-				onclick="$(this).select();"
-				title="Guest's Name"
-				/>
-		</td>
+						<option 
+							value="<?= $food->foodId ?>"
+							<?= $food->foodId == $guest->foodId ? $selected : "" ?>>
+								<?= $food->foodName ?>
+						</option>
+				<?php } /*foreach(foods)*/ ?>
+					</select>
+				</td>
+				
+			</tr>
+		<?php } ?>
+		</tbody>
+		</table>
+		</form>
 		
-		<td class="foodId">
-			<select
-				name="foodId[]" 
-				size="<?= count($this->foods) ?>"
-				class="required"
-				title="Food Choice">
-				<option 
-					value=""
-					style="display: none;"
-					<?= !$guest->foodId ? $selected : "" ?>>
-					<!-- DATA HACK -->
-				</option>
+		<h3>Food choices</h3>
+		<dl>
 		<?php foreach($this->foods as $food) { ?>
-
-				<option 
-					value="<?= $food->foodId ?>"
-					<?= $food->foodId == $guest->foodId ? $selected : "" ?>>
-						<?= $food->foodName ?>
-				</option>
+			<dt><?= $food->foodName ?></dt>
+				<dd><?= $food->foodDesc ?></dd>
 		<?php } /*foreach(foods)*/ ?>
-			</select>
-		</td>
+		</dl>
 		
-	</tr>
-<?php } ?>
-</tbody>
-</table>
-</form>
-
-<h3>Food choices</h3>
-<dl>
-<?php foreach($this->foods as $food) { ?>
-	<dt><?= $food->foodName ?></dt>
-		<dd><?= $food->foodDesc ?></dd>
-<?php } /*foreach(foods)*/ ?>
-</dl>
-
-<p>If you have any questions or comments, please call us using the phone number found on your invitation.</p>
+		<p>If you have any questions or comments, please call us using the phone number found on your invitation.</p>
+	</div>
+	<div style="clear:both; background-color:#000;">&nbsp;</div>
+	<div id="footer">&nbsp;</div>
+</div>
