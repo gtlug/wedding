@@ -5,6 +5,7 @@ $this->headLink()->appendStylesheet('/css/home.css');
 <div id="outer">
 
 	<div id="left">
+		<h1>Lindsey White &amp; Adam VanBerlo are getting married!</h1>
 		<div id="homeLeftButtons">
 			<a 
 				id="moreInfoLink" 

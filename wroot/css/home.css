@@ -37,6 +37,11 @@ body
 	-webkit-border-bottom-right-radius: 15px;*/
 }
 
+#left h1
+{
+	display: none;
+}
+
 #homeLeftButtons {
 	position:relative;
 	width: 350px;
