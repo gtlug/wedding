@@ -38,7 +38,7 @@ Rsvp.Index.Widget = {
 		
 		if(parts.length < 2)
 		{
-			alert("Please use your full name");
+			alert("Please use your full name (i.e. first last)");
 			return event.stop();
 		}
 	},
