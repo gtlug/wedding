@@ -2,6 +2,7 @@
 $this->headTitle('Stats');
 
 $guestsCount = $this->guests->count();
+$projectedCount = 0;
 $adhocCount = 0;
 $foodSelectionCounts = array();
 $remainders = array();
@@ -19,6 +20,7 @@ foreach($this->guests as $guest)
 		if(!isset($remainders[$guest->inviteId]))
 		{
 			$remainders[$guest->inviteId] = $guest->guests;
+			$projectedCount += $guest->guests;
 		}
 		
 		if($guest->attending)
@@ -41,9 +43,12 @@ foreach($this->guests as $guest)
 $declines = array_sum($remainders);
 ?>
 <dl>
-	<dt>Total Guest Response Count</dt>
+	<dt>Total Named Guest Response Count</dt>
 	<dd><?= $guestsCount ?></dd>
-
+	
+	<dt>Total Projected Guest Response Count</dt>
+	<dd><?= $projectedCount ?></dd>
+	
 	<dt>Attending</dt>
 	<dd><?= $attending ?></dd>
 	
@@ -66,7 +71,7 @@ $declines = array_sum($remainders);
 </dl>
 <?php if($this->showGuests) { ?>
 
-<table>
+<table border="1" cellpadding="5" cellspacing="0">
 <thead>
 	<tr>
 		<th>guestId</th>
