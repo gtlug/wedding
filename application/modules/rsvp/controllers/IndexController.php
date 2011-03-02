@@ -55,7 +55,7 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 		//header("content-type: text/plain");
 		$params = $_POST;
 		
-		$name = $params[self::PARAM_NAME];
+		$name = strtolower($params[self::PARAM_NAME]);
 		$this->_log->debug($name);
 		
 		$invite = null;
