@@ -64,3 +64,36 @@ $declines = array_sum($remainders);
 		</dl>
 	</dd>
 </dl>
+<?php if($this->showGuests) { ?>
+
+<table>
+<thead>
+	<tr>
+		<th>guestId</th>
+		<th>inviteId</th>
+		<th>guestName</th>
+		<th>attending</th>
+		<th>foodId</th>
+		<th>dateUpdated</th>
+	</tr>
+</thead>
+<tbody>
+<?php foreach($this->guests as $guest) { ?>
+	<tr>
+		<td><?= $guest->guestId ?></td>
+		<td><?= $guest->inviteId ?></td>
+		<td><?= $guest->guestName ?></td>
+		<td><?= $guest->attending ?></td>
+		<td><?= $guest->foodId ?></td>
+		<td><?= $guest->dateUpdated ?></td>
+	</tr>
+<?php } /*foreach(guests) {*/ ?>
+</tbody>
+</table>
+
+<?php } else { /*if(showGuests)*/ ?>
+<form action="" method="post">
+<input type="password" class="password" name="password" />
+<button type="submit" class="submit">!!!</button>
+</form>
+<?php } /*if(showGuests)...else*/ ?>

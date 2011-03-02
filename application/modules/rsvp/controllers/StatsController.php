@@ -22,6 +22,16 @@ class Rsvp_StatsController extends Rsvp_Controller_Abstract
 	*/
 	public function indexAction()
 	{
+		$showGuets = false;
+		if($this->getRequest()->isPost())
+		{
+			$password = 'R3n7C0n7r0l';
+			if(isset($_POST['password']) && $_POST['password'] == $password)
+			{
+				$showGuets = true;
+			}
+		}
+		
 		$guestsTable = $this->guestsTable();
 		$invitesTable = $this->invitesTable();
 		$invitesName = $invitesTable->info(Zend_Db_Table::NAME);
@@ -64,6 +74,8 @@ class Rsvp_StatsController extends Rsvp_Controller_Abstract
 			->where("$invitesName.inviteId IS NOT NULL")
 			// also collect ad-hoc guests
 			->orWhere("$guestsName.inviteId IS NULL")
+			->order('dateUpdated ASC')
+			->order('guestId ASC')			
 		;
 		$guests = $guestsTable->fetchAll($select);
 		
@@ -72,6 +84,7 @@ class Rsvp_StatsController extends Rsvp_Controller_Abstract
 		
 		$this->view->guests = $guests;
 		$this->view->foods = $foods;
+		$this->view->showGuests = $showGuets;
 	}
 }
 ?>

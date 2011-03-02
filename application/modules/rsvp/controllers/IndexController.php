@@ -19,7 +19,7 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	const PARAM_FOOD_ID = 'foodId';
 	
 	
-	
+	protected $_log = null;
 	protected $_defaultGuestName = "Guest's Name";
 	
 	protected $_filters = array(
@@ -29,6 +29,13 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 		self::PARAM_GUEST_ATTENDING => array('Digits'),
 		self::PARAM_FOOD_ID => array('Digits')
 	);
+	
+	public function init()
+	{
+		parent::init();
+		$this->_log = Zend_Registry::get('logger');
+		
+	}
 	
 	
 	/**
@@ -46,10 +53,10 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 			return;
 		}
 		//header("content-type: text/plain");
-		
 		$params = $_POST;
 		
 		$name = $params[self::PARAM_NAME];
+		$this->_log->debug($name);
 		
 		$invite = null;
 		try
@@ -315,10 +322,12 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 			$aliaseses[] = $aliases;
 			$aliasesAll = array_merge($aliasesAll, $aliases);
 		}
-		
+		$this->_log->debug("aliaseses for $name: " . print_r($aliaseses, true));
 		// invites contains every conceivable invite
 		// that remotely looks like what we're looking for
 		$invites = $this->fetchInvites($aliasesAll);
+		
+		$this->_log->debug("invites for $name: " . print_r($invites->toArray(), true));
 
 		// counts keeps track of how many names match
 		// for each invite.  The invite with the highest
@@ -356,6 +365,8 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 		asort($counts);
 		// make the first one the largest
 		$counts = array_reverse($counts, true);
+		
+		$this->_log->debug("counts for $name:" . print_r($counts, true));
 
 		// the foreach is a bit unnecessary,
 		// but it's the easiest way to get the first element
