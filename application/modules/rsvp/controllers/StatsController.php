@@ -74,8 +74,8 @@ class Rsvp_StatsController extends Rsvp_Controller_Abstract
 			->where("$invitesName.inviteId IS NOT NULL")
 			// also collect ad-hoc guests
 			->orWhere("$guestsName.inviteId IS NULL")
-			->order('dateUpdated ASC')
-			->order('guestId ASC')			
+			->order('dateUpdated DESC')
+			->order('guestId DESC')			
 		;
 		$guests = $guestsTable->fetchAll($select);
 		
