@@ -40,9 +40,9 @@ class Rsvp_IndexController extends Rsvp_Controller_Abstract
 	
 	/**
 	* This action can be accessed at
-	* /home
-	* /home/index
-	* /home/index/index
+	* /rsvp
+	* /rsvp/index
+	* /rsvp/index/index
 	*   M     C     A
 	*/
 	public function indexAction()
